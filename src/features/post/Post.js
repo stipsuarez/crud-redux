@@ -9,7 +9,7 @@ export function Post() {
     // console.log(posts)
     var posts = dataPost;
     return (
-        <div className="container">
+        <div className="containerC">
             <div className="table-responsive">
                 <table className="table" >
                     <thead>

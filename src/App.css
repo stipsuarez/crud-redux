@@ -1,6 +1,9 @@
 .App {
   text-align: center;
 }
+.containerC {
+  min-height: 500px!important;
+}
 
 .App-logo {
   height: 40vmin;

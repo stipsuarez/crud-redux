@@ -3,7 +3,7 @@
 // import styles from './Post.module.css';
 export function Home() {
     return (
-        <div className="container">
+        <div className="containerC">
             <div className="table-responsive">
                Home component
             </div>
