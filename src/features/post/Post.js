@@ -4,7 +4,12 @@ import styles from './Post.module.css';
 export function Post() {
 
     // const posts = store.getState();
-
+    function onActionClick(action, payload){
+        console.log(action+"  "+payload)
+        if(action==="edit"){
+            //open modal
+        }
+    }
     // console.log("posts component")
     // console.log(posts)
     var posts = dataPost;
@@ -28,7 +33,11 @@ export function Post() {
                                     <td>{post.id}</td>
                                     <td>{post.title}</td>
                                     <td>{post.profileId}</td>
-                                    <td><button className='btn btn-success'>Edit</button></td>
+                                    <td>
+                                        <button onClick={() => onActionClick("edit",post.id)} className='btn btn-success'>Edit</button>
+                                        <button onClick={() => onActionClick("delete",post.id)} className='btn btn-danger'>Delete</button>
+                                        <button onClick={() => onActionClick("view",post.id)} className='btn btn-primary'>View</button>
+                                    </td>
                                 </tr>)
                         })}
 
