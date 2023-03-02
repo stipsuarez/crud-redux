@@ -1,7 +1,8 @@
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
-import { BrowserRouter,Link, Route, Routes } from 'react-router-dom'
+import { BrowserRouter, Link, Route, Routes } from 'react-router-dom'
 import { Counter } from '../../features/counter/Counter';
+import { Home } from '../../features/home/Home';
 import { Post } from '../../features/post/Post';
 export function NavBar() {
     return (
@@ -15,17 +16,17 @@ export function NavBar() {
                             <Nav className="me-auto">
                                 <Nav.Link as={Link} to="/home">
                                     {/* <Link to={"/home"} > */}
-                                        Home
+                                    Home
                                     {/* </Link> */}
                                 </Nav.Link>
-                                <Nav.Link  as={Link} to={'/counter'}>
+                                <Nav.Link as={Link} to={'/counter'}>
                                     {/* <Link > */}
-                                        Counter
+                                    Counter
                                     {/* </Link> */}
                                 </Nav.Link>
                                 <Nav.Link as={Link} to={'/post'}>
                                     {/* <Link  > */}
-                                        Post
+                                    Post
                                     {/* </Link> */}
                                 </Nav.Link>
                             </Nav>
@@ -34,8 +35,8 @@ export function NavBar() {
                     </Navbar>
                 </div>
                 <Routes >
-                    <Route index path='/home' element={<Counter />} >
-                    </Route>
+                    <Route index path='/' element={<Home />} />
+                    <Route path='/home' element={<Home />} />
                     <Route path='/post' element={<Post />} />
                     <Route path='/counter' element={<Counter />} />
 
