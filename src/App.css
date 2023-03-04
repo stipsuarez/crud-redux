@@ -2,7 +2,9 @@
   text-align: center;
 }
 .containerC {
-  min-height: 500px!important;
+  /* min-height: 5px!important; */
+  background-color: white;
+  width: 80%;
 }
 
 .App-logo {

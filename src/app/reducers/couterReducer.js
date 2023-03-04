@@ -1,5 +1,6 @@
 //This is like a service
-export const useCounter = (state, action) => {
+const initialState =2
+export const couterReducer = (state=initialState, action) => {
     switch (action) {
         case "@counter/plus":
             return state.value += state.data
@@ -15,3 +16,4 @@ export const useCounter = (state, action) => {
             return state
     }
 }
+export default couterReducer

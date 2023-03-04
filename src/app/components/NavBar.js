@@ -3,7 +3,9 @@ import Navbar from 'react-bootstrap/Navbar';
 import { BrowserRouter, Link, Route, Routes } from 'react-router-dom'
 import { Counter } from '../../features/counter/Counter';
 import { Home } from '../../features/home/Home';
-import { Post } from '../../features/post/Post';
+import { AddPost } from '../../features/post/add/AddPost';
+import { Posts } from '../../features/post/Posts';
+import { Post } from '../../features/post/view/Post';
 export function NavBar() {
     return (
         <>
@@ -24,10 +26,13 @@ export function NavBar() {
                                     Counter
                                     {/* </Link> */}
                                 </Nav.Link>
-                                <Nav.Link as={Link} to={'/post'}>
+                                <Nav.Link as={Link} to={'/posts'}>
                                     {/* <Link  > */}
                                     Post
                                     {/* </Link> */}
+                                </Nav.Link>
+                                <Nav.Link as={Link} to={'/post/add'}>
+                                    Add Post
                                 </Nav.Link>
                             </Nav>
                         </Navbar.Collapse>
@@ -37,7 +42,9 @@ export function NavBar() {
                 <Routes >
                     <Route index path='/' element={<Home />} />
                     <Route path='/home' element={<Home />} />
-                    <Route path='/post' element={<Post />} />
+                    <Route path='/posts' element={<Posts />} />
+                    <Route path='/post/add' element={<AddPost />} />
+                    <Route path='/post/:id' element={<Post />} />
                     <Route path='/counter' element={<Counter />} />
 
 

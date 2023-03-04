@@ -3,16 +3,19 @@ import React from 'react';
 import './App.css';
 import { NavBar } from './app/components/NavBar';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import { FooterApp } from './app/components/FooterApp';
 
 function App() {
   return (
+    
     <div className="App">
+      
       <header className="App-header">
         <NavBar/>
         
         {/* <img src={logo} className="App-logo" alt="logo" /> */}
-        
-        <p>
+      
+        {/* <p>
           Edit <code>src/App.js</code> and save to reload.
         </p>
         <span>
@@ -52,8 +55,9 @@ function App() {
           >
             React Redux
           </a>
-        </span>
+        </span> */}
       </header>
+      <FooterApp/>
     </div>
   );
 }

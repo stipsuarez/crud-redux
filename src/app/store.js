@@ -1,25 +1,43 @@
 import { configureStore } from '@reduxjs/toolkit';
 import { any } from 'prop-types';
-import counterReducer from '../features/counter/counterSlice';
-import {  initPosts, postReducer } from './reducers/postReducer';
-import { getAllPosts } from './services/postService';
 
-export var dataPost= any
+
+//import {  initPosts, postReducer } from './reducers/postReducer';
+import postService, { getAllPosts } from './services/postService';
+import { applyMiddleware } from 'redux';
+import { composeWithDevTools } from "redux-devtools-extension";
+import thunk from 'redux-thunk';
+import rootReducer from './reducers';
+import { initPosts, READ_ALL_DATA } from './actions/types';
+import { useDispatch } from 'react-redux';
+import { useEffect } from 'react';
+
+export var dataPost = any
+//const dispatch = useDispatch();
+const initialState = {
+  posts:[],
+  counter:2,
+};
+
+const middleware = [thunk];
 
 //const postRedu = postReducer(data)
-getAllPosts().then(posts=>{
-  console.log(posts.data)
-  store.dispatch(initPosts(posts.data))
-  dataPost=posts.data
-  //return posts.data
-})
-
 export const store = configureStore({
-  reducer: {
-    counter: counterReducer,
-     posters: postReducer
-  },
+  reducer: rootReducer,
+  devTools: composeWithDevTools(applyMiddleware(...middleware)),
+  initialState
+
 });
 
 
-
+postService.getAllPosts().then(posts => {
+  console.log("Store init")
+  console.log(posts.data)
+ 
+  //store.dispatch(initPosts,posts.data)
+  //dispatch(READ_ALL_DATA.toString(),posts.data)
+  // console.log(posts.data)
+  dataPost = posts.data
+  //initialState=posts.data
+  //return posts.data
+})
