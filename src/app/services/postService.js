@@ -27,7 +27,7 @@ const getAllPosts = async () => {
     return response
 }
  const deletePost = async (id) => {
-    console.log("Url delete: "+baseUrl + moduleUrl+"/"+id)
+    // console.log("Url delete: "+baseUrl + moduleUrl+"/"+id)
     const response = await axios.delete(baseUrl + moduleUrl+"/"+id)
     return response
 }

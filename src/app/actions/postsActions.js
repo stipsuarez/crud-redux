@@ -48,8 +48,8 @@ export const updatePost = (id, data) => async (dispatch) => {
 var countExecuted = 0
 export const deletePost = (id) => async (dispatch) => {
   try {
-    console.log("In dilete Action")
-    console.log(dispatch,id,countExecuted)
+    // console.log("In dilete Action")
+    // console.log(dispatch,id,countExecuted)
     await postService.deletePost(id).then(result=>{
       countExecuted++
     });

@@ -23,23 +23,23 @@ export function Posts() {
     //setcurrentPost(general1.idPost)
     if(currentPost!==general1.idPost && general1.idPost==-1)
     currentPost=  general1.idPost
-    console.log("Genal status")
-    console.log(general1, currentPost)
+    // console.log("Genal status")
+    // console.log(general1, currentPost)
 
     //const [cieloRaso, setCieloRaso] = useState(false);
     // const storePost = store.getState().posters;
 
     //function reset(){
     if (!general1.showModal && general1.aceptAction && general1.idPost && general1.idPost > 0 && currentPost > 0) {
-        console.log("Before delete")
-        console.log(general1, currentPost)
+        // console.log("Before delete")
+        // console.log(general1, currentPost)
         //setcurrentPost(-1)
         dispatch(deletePost(general1.idPost)).then(response => {
 
-            console.log("After delete")
-            //setcurrentPost(-1)
-            //general1.idPost = -1
-            console.log(general1.idPost, currentPost, response)
+            // console.log("After delete")
+            // //setcurrentPost(-1)
+            // //general1.idPost = -1
+            // console.log(general1.idPost, currentPost, response)
             //posts=posts.filter((prevItem) => prevItem !== response)
         }
             //setcurrentPost(-1)
@@ -59,7 +59,7 @@ export function Posts() {
     }
     function onActionClick(action, payload) {
         setcurrentPost(payload)
-        console.log(action + "  " + payload)
+        // console.log(action + "  " + payload)
         if (action === "delete") {
 
             setShowAlert(true)
@@ -94,8 +94,8 @@ export function Posts() {
                 //setPost(...post)
                 //setSubmitted(true);
                 setGeneral(response)
-                console.log("Set general in POSTS handleOpen result")
-                console.log(response);
+                // console.log("Set general in POSTS handleOpen result")
+                // console.log(response);
             }
         ).catch(e => {
             console.log(e);
