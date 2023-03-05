@@ -1,3 +1,4 @@
+import { current } from "@reduxjs/toolkit";
 import {
     CREATE_DATA,
     READ_ALL_DATA,
@@ -17,8 +18,8 @@ import {
         return [...posts, payload];
   
       case READ_ALL_DATA:
-        console.log("Recuder")
-        console.log(payload)
+        //console.log("Recuder")
+        //console.log(payload)
         return payload;
   
         case initPosts:
@@ -36,7 +37,7 @@ import {
         });
   
       case DELETE_DATA:
-        return posts.filter(({ id }) => id !== payload.id);
+        return (posts.filter(({ id }) => id !== payload.id));
   
       case READ_ITEM_DATA:
         return posts.filter(({ id }) => id === payload.id);

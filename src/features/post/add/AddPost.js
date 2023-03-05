@@ -1,24 +1,70 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
-import { createPost } from "../../../app/actions/postsActions";
+import { useNavigate, useParams } from "react-router-dom";
+import { createPost, getPostById, updatePost } from "../../../app/actions/postsActions";
+import postService from "../../../app/services/postService";
 
 
-export function AddPost () {
+export function AddPost() {
     const initialPostState = {
-        id: null,
+        id: 0,
         title: "",
-        profileId: ""
+        profileId: 0
     };
+
     const [post, setPost] = useState(initialPostState);
-    const [submitted, setSubmitted] = useState(false);
 
     const dispatch = useDispatch();
+
+
+    const { id } = useParams()
+
+    const getPost = id => {
+        if (id && id > 0) {
+            postService.getPostById(id)
+                .then(response => {
+                    // console.log(response.data);
+                    setPost(response.data);
+
+                })
+                .catch(e => {
+                    console.log(e);
+                });
+        }
+    }
+
+
+    useEffect(() => {
+        getPost(id);
+    }, [id]);
+
+
+
+
+    const [submitted, setSubmitted] = useState(false);
+
+
 
     const handleInputChange = async event => {
         const { name, value } = event.target;
         setPost({ ...post, [name]: value });
     };
+    const updatePostC = () => {
+        // const data = {
+        //     id: post.id,
+        //     title: post.title,
+        //     profileId: post.profileId
+        // };
+        dispatch(updatePost(id, post)).then(
+            response => {
+                //setPost(...post)
+                setSubmitted(true);
+                // console.log(response);
+            }
+        ).catch(e => {
+            console.log(e);
+        });
+    }
 
     const savePost = () => {
         const { title, profileId } = post;
@@ -32,7 +78,7 @@ export function AddPost () {
                 });
                 setSubmitted(true);
 
-                console.log(data);
+                // console.log(data);
             })
             .catch(e => {
                 console.log(e);
@@ -43,29 +89,42 @@ export function AddPost () {
         setPost(initialPostState);
         setSubmitted(false);
     };
-    const navegate =  useNavigate()
+    const navegate = useNavigate()
 
     const PostPage = () => {
-        navegate("/posts")
+        //goposts
+        //navegate("/posts")
+        //go back
+        navegate(-1)
+    }
+    const changeSubmitting = () => {
+        //goposts
+        //navegate("/posts")
+        //go back
+        setSubmitted(false)
     }
 
     return (
-        <div className="submit-form">
-            {submitted ? (
+        <div className="submit-form containerC">
+            {submitted  ? (
                 <div>
                     <h4>You submitted successfully!</h4>
                     <button className="btn btn-success" onClick={newPost}>
                         Add
                     </button>
-
-                    <button className="btn btn-success" onClick={PostPage}>
-                        Post
+                    <button className="btn btn-secondary" onClick={PostPage}>
+                        Go Back
                     </button>
+
+                    <button className="btn btn-primary" onClick={changeSubmitting}>
+                        Edit again
+                    </button>
+
                 </div>
             ) : (
                 <div>
                     <div className="form-group">
-                        <label htmlFor="title">Title</label>
+                        <label htmlFor="title">{id && id > 0 ? "Editar Post: " + id : "Crear"}</label>
                         <input
                             type="text"
                             className="form-control"
@@ -89,12 +148,25 @@ export function AddPost () {
                             name="profileId"
                         />
                     </div>
+                    <div className="align-items-stretch">
+                        {id && id > 0 ?
+                            <button onClick={updatePostC} className="btn btn-primary">
+                                Update
+                            </button>
+                            :
+                            <button onClick={savePost} className="btn btn-success">
+                                Create
+                            </button>
+                        }
 
-                    <button onClick={savePost} className="btn btn-success">
-                        Submit
-                    </button>
+
+                        <button className="btn btn-secondary" onClick={PostPage}>
+                            Go Back
+                        </button>
+                    </div>
                 </div>
             )}
+
         </div>
     );
 };

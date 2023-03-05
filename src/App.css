@@ -1,8 +1,9 @@
 .App {
   text-align: center;
 }
+
 .containerC {
-  /* min-height: 5px!important; */
+  min-height: 500px !important;
   background-color: white;
   width: 80%;
 }
@@ -35,10 +36,23 @@
   0% {
     transform: translateY(0);
   }
+
   50% {
     transform: translateY(10px);
   }
+
   100% {
     transform: translateY(0px);
   }
+}
+
+.modalAlert {
+  background-color: whitesmoke;
+  max-width: 60% !important;
+  width: 60%!important;
+  text-align: center !important;
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
 }

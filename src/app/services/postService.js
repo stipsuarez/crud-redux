@@ -12,7 +12,8 @@ const getAllPosts = async () => {
 }
 
  const getPostById = async (id) => {
-    const response = await axios.getById(baseUrl + moduleUrl+"/"+id)
+    //console.log("Ruta:  "+baseUrl + moduleUrl+"/"+id)
+    const response = await axios.get(baseUrl + moduleUrl+"/"+id)
     return response
 }
 
@@ -26,6 +27,7 @@ const getAllPosts = async () => {
     return response
 }
  const deletePost = async (id) => {
+    console.log("Url delete: "+baseUrl + moduleUrl+"/"+id)
     const response = await axios.delete(baseUrl + moduleUrl+"/"+id)
     return response
 }

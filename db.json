@@ -1,98 +1,22 @@
 {
   "posts": [
     {
-      "id": 1,
-      "title": "POST 1",
-      "profileId": 1
-    },
-    {
-      "id": 2,
-      "title": "POST 2",
-      "profileId": 1
-    },
-    {
-      "id": 3,
-      "title": "POST 3",
-      "profileId": 2
-    },
-    {
-      "title": "Nuevo post",
-      "profileId": "1",
-      "id": 4
-    },
-    {
-      "title": "new post",
-      "profileId": "2",
-      "id": 5
+      "title": "POST 1 as asdfas asdf",
+      "profileId": "65465",
+      "id": 2
     },
     {
       "title": "true post title",
-      "profileId": "2",
-      "id": 6
+      "profileId": "500",
+      "id": 3
     },
     {
-      "title": "otro popst",
-      "profileId": "1",
-      "id": 7
-    },
-    {
-      "title": "test otro",
-      "profileId": "2",
-      "id": 8
-    },
-    {
-      "title": "nrytr",
-      "profileId": "2",
-      "id": 9
-    },
-    {
-      "title": "UseEffect, dispatch",
-      "profileId": "1",
-      "id": 10
+      "title": "POST 1 as",
+      "profileId": "0234",
+      "id": 4
     }
   ],
-  "comments": [
-    {
-      "id": 1,
-      "body": "some comment 1",
-      "postId": 1
-    },
-    {
-      "id": 2,
-      "body": "some comment 2",
-      "postId": 1
-    },
-    {
-      "id": 3,
-      "body": "some comment 3",
-      "postId": 1
-    },
-    {
-      "id": 4,
-      "body": "some comment 4",
-      "postId": 2
-    },
-    {
-      "id": 5,
-      "body": "some comment 5",
-      "postId": 2
-    },
-    {
-      "id": 6,
-      "body": "some comment 6",
-      "postId": 2
-    },
-    {
-      "id": 7,
-      "body": "some comment 7",
-      "postId": 3
-    },
-    {
-      "id": 8,
-      "body": "some comment 8",
-      "postId": 3
-    }
-  ],
+  "comments": [],
   "profile": [
     {
       "id": 1,
