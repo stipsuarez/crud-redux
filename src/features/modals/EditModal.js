@@ -24,8 +24,8 @@ export function EditModal({ showAlert }) {
   if (visible != showAlert.showModal && (general.action === "editM" || general.action === "newM"))
     setVisible(showAlert.showModal)
 
-
-  let id = general.idPost ? general.idPost : -1
+  const[id,setId] =useState(general.idPost ? general.idPost : -1)
+  //let id = 
 
 
   useEffect(() => {
@@ -97,8 +97,8 @@ export function EditModal({ showAlert }) {
           profileId: data.profileId
         });
         setSubmitted(true);
-
-        // console.log(data);
+        dispatch(setCurrentPost(data))
+         console.log("after save",data);
       })
       .catch(e => {
         console.log(e);
@@ -126,6 +126,10 @@ export function EditModal({ showAlert }) {
     //goposts
     //navegate("/posts")
     //go back
+    // dispatch(showModalAction(true,id,"editM"))
+    // dispatch(setId(id))
+    console.log("Edit in modal",general.currentPost.id)
+    setId(general.currentPost.id)
     setSubmitted(false)
   }
 

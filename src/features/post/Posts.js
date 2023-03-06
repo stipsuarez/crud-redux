@@ -130,7 +130,7 @@ export function Posts() {
             <div className='row'>
                 <div className='col-10'>
                     <button onClick={() => onActionClick('new', null)} className='btn btn-secondary float-end pl-10'>New Post</button>
-                    <button onClick={() => onActionClick('newM', null)} className='btn btn-light float-end pl-10'>New Post Modal</button>
+                    <button onClick={() => onActionClick('newM', null)} className='btn btn-warning float-end pl-10'>New Post Modal</button>
                 </div>
                 <div className='col-12'>
                     <div className="table-responsive">
