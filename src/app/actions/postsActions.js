@@ -1,5 +1,5 @@
 import postService from "../services/postService";
-import { CREATE_DATA, DELETE_DATA, READ_ALL_DATA, READ_ITEM_DATA, UPDATE_DATA, showModal, ACCEPT_ACTION, RESET_ID } from "./types";
+import { CREATE_DATA, DELETE_DATA, READ_ALL_DATA, READ_ITEM_DATA, UPDATE_DATA, showModal, ACCEPT_ACTION, RESET_ID, SET_ID, SET_CURRENT_POST } from "./types";
 
 export const createPost = (title, profileId) => async (dispatch) => {
   try {
@@ -50,7 +50,7 @@ export const deletePost = (id) => async (dispatch) => {
   try {
     // console.log("In dilete Action")
     // console.log(dispatch,id,countExecuted)
-    await postService.deletePost(id).then(result=>{
+    await postService.deletePost(id).then(result => {
       countExecuted++
     });
     dispatch({
@@ -62,7 +62,7 @@ export const deletePost = (id) => async (dispatch) => {
       type: DELETE_DATA,
       payload: { id },
     });
-    
+
     return id
   } catch (err) {
     console.log(err);
@@ -97,14 +97,14 @@ export const getPostById = (id) => async (dispatch) => {
   }
 };
 
-export const showModalAction = (value, id) => async (dispatch) => {
+export const showModalAction = (value, id,action) => async (dispatch) => {
   try {
     //const res = await postService.getPostById(id);
     // console.log("in action showModal")
     // console.log(value)
     await dispatch({
       type: showModal,
-      payload: { value, id },
+      payload: { value, id ,action},
     });
     return value;
   } catch (err) {
@@ -128,6 +128,21 @@ export const acceptAction = (value) => async (dispatch) => {
   }
 };
 
+export const setId = (id) => async (dispatch) => {
+  try {
+    //const res = await postService.getPostById(id);
+    // console.log("in action showModal")
+    // console.log(value)
+    await dispatch({
+      type: SET_ID,
+      payload: { id: id },
+
+    });
+  } catch (err) {
+    console.log(err);
+  }
+}
+
 export const resetId = () => async (dispatch) => {
   try {
     //const res = await postService.getPostById(id);
@@ -142,3 +157,11 @@ export const resetId = () => async (dispatch) => {
     console.log(err);
   }
 };
+export const setCurrentPost = (post) => async (dispatch)=>{
+  await dispatch({
+    type: SET_CURRENT_POST,
+    payload: {currentPost:post}
+  })
+}
+
+

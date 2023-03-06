@@ -2,8 +2,9 @@ import styles from './Posts.module.css';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
-import { deletePost, getAllPosts, getPostById, showModal, showModalAction } from '../../app/actions/postsActions';
+import { deletePost, getAllPosts, getPostById, setCurrentPost, setId, showModal, showModalAction } from '../../app/actions/postsActions';
 import { AlertModal } from '../modals/AlertModal';
+import { EditModal } from '../modals/EditModal';
 
 
 export function Posts() {
@@ -15,14 +16,15 @@ export function Posts() {
     }, []);
 
     const [showAlert, setShowAlert] = useState(false)
+    const [showAlertM, setShowAlertM] = useState(false)
     var posts = useSelector(state => state.posts);
     const general1 = useSelector(state => state.general);
     const [general, setGeneral] = useState(showAlert);
 
     let [currentPost, setcurrentPost] = useState(general1.idPost)
     //setcurrentPost(general1.idPost)
-    if(currentPost!==general1.idPost && general1.idPost==-1)
-    currentPost=  general1.idPost
+    if (currentPost !== general1.idPost && general1.idPost == -1)
+        currentPost = general1.idPost
     // console.log("Genal status")
     // console.log(general1, currentPost)
 
@@ -42,11 +44,6 @@ export function Posts() {
             // console.log(general1.idPost, currentPost, response)
             //posts=posts.filter((prevItem) => prevItem !== response)
         }
-            //setcurrentPost(-1)
-            //general1.idPost=-1
-
-            //
-
 
         ).catch(e => {
             console.log(e)
@@ -54,42 +51,66 @@ export function Posts() {
     }
     //}
 
-    const resetId = () => {
-
+    function setIdPorspect(id) {
+        dispatch(setId(id)).then(
+            (response) => {
+                setcurrentPost(id)
+            }).catch(e =>
+                console.log(e)
+            )
     }
     function onActionClick(action, payload) {
         setcurrentPost(payload)
-        // console.log(action + "  " + payload)
+        console.log(action, payload)
         if (action === "delete") {
+            dispatch(setCurrentPost(currentPost)).then((response) => {
+                //    navegate("/post/edit/" + payload.payload.id)
+                setShowAlert(true)
+                handleOpen(payload,action)
+            })
 
-            setShowAlert(true)
-            handleOpen(payload)
-            // if (general.aceptAction) {
-            //     dispatch(deletePost(payload)).then(
-
-            //     ).catch(e => {
-            //         console.log(e)
-            //     });
-            // }
         }
-        if (action === "new") {
+        else if (action === "editM") {
+
+            setShowAlertM(true)
+            dispatch(setCurrentPost(payload.payload.currentPost)).then((response) => {
+                //navegate("/post/edit/" + payload.payload.id)
+                handleOpen(payload.payload.id, action)
+            })
+            
+        }
+        else if (action === "newM") {
+
+            setShowAlertM(true)
+            dispatch(setCurrentPost({})).then((response) => {
+                //navegate("/post/edit/" + payload.payload.id)
+                setShowAlert(true)
+                handleOpen(-1, action)
+            })
+            
+        }
+       else if (action === "new") {
             navegate("/post/add")
         }
-        if (action === "view") {
+        else if (action === "view") {
             navegate("/post/" + payload)
         }
-        if (action === "edit") {
-            navegate("/post/edit/" + payload)
+        else if (action === "edit") {
+            dispatch(setCurrentPost(payload.payload.currentPost)).then((response) => {
+                navegate("/post/edit/" + payload.payload.id)
+            })
+
         }
     }
 
     // console.log("beforeUserdispach")
     // console.log(posts)
-    const handleOpen = (id) => {
+    const handleOpen = (id,action) => {
         //e.preventDefault();
         //refForm.current.reset();
         //setCieloRaso(cieloRaso)
-        dispatch(showModalAction(true, id)).then(
+        setIdPorspect(id)
+        dispatch(showModalAction(true, id,action)).then(
             response => {
                 //setPost(...post)
                 //setSubmitted(true);
@@ -109,6 +130,7 @@ export function Posts() {
             <div className='row'>
                 <div className='col-10'>
                     <button onClick={() => onActionClick('new', null)} className='btn btn-secondary float-end pl-10'>New Post</button>
+                    <button onClick={() => onActionClick('newM', null)} className='btn btn-light float-end pl-10'>New Post Modal</button>
                 </div>
                 <div className='col-12'>
                     <div className="table-responsive">
@@ -133,9 +155,10 @@ export function Posts() {
                                                 <td>{post.title}</td>
                                                 <td>{post.profileId}</td>
                                                 <td>
-                                                    <button onClick={() => onActionClick("edit", post.id)} className='btn btn-success'>Edit</button>
+                                                    <button onClick={() => onActionClick("edit", { payload: { id: post.id, currentPost: post } })} className='btn btn-success'>Edit</button>
                                                     <button onClick={() => onActionClick("view", post.id)} className='btn btn-primary'>View</button>
                                                     <button onClick={() => onActionClick("delete", post.id)} className='btn btn-danger'>Delete</button>
+                                                    <button onClick={() => onActionClick("editM", { payload: { id: post.id, currentPost: post } })} className='btn btn-success'>Edit Modal</button>
                                                     {/* <button onClick={() => handleOpen()} className='btn btn-danger'>Delete D</button> */}
                                                 </td>
                                             </tr>)
@@ -155,6 +178,7 @@ export function Posts() {
             </div>
 
             <AlertModal showAlert={general1} ></AlertModal>
+            <EditModal showAlert={general1} ></EditModal>
 
 
 

@@ -1,15 +1,8 @@
 import { configureStore } from '@reduxjs/toolkit';
-import { any } from 'prop-types';
-
-
-//import {  initPosts, postReducer } from './reducers/postReducer';
 import { applyMiddleware } from 'redux';
 import { composeWithDevTools } from "redux-devtools-extension";
 import thunk from 'redux-thunk';
 import rootReducer from './reducers';
-import { initPosts, READ_ALL_DATA } from './actions/types';
-import { useDispatch } from 'react-redux';
-import { useEffect } from 'react';
 
 //export var dataPost = any
 //const dispatch = useDispatch();

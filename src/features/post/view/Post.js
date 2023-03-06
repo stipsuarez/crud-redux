@@ -1,8 +1,7 @@
 import { useEffect, useState } from "react";
-import { FormGroup, FormLabel } from "react-bootstrap";
 import { useDispatch } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
-import { getPostById } from "../../../app/actions/postsActions";
+import {  setCurrentPost } from "../../../app/actions/postsActions";
 import postService from "../../../app/services/postService";
 
 export function Post(payload) {
@@ -14,13 +13,13 @@ export function Post(payload) {
         title: "",
         profileId: null
     }
-    const [currentPost, setCurrentPost] = useState(initialState)
+    const [currentPost, setCurrentPostL] = useState(initialState)
 
     const getPost = id => {
         postService.getPostById(id)
             .then(response => {
                 //console.log(response.data);
-                setCurrentPost(response.data);
+                setCurrentPostL(response.data);
 
             })
             .catch(e => {
@@ -32,6 +31,14 @@ export function Post(payload) {
     useEffect(() => {
         getPost(id);
     }, [id]);
+
+    function goToUpdate(){
+        //console.log("go to update in view",currentPost)
+        dispatch(setCurrentPost(currentPost)).then( (response)=>
+            navegator("/post/edit/"+currentPost.id)
+        ).catch(e=>console.log(e))
+        
+    }
 
     return (
         <div className='containerC align-items-center'>
@@ -57,7 +64,7 @@ export function Post(payload) {
                         {currentPost.profileId}
                     </div>
 
-                    <button onClick={() => navegator("/post/edit/"+currentPost.id)} className='btn btn-success'>Update</button>
+                    <button onClick={() => goToUpdate()} className='btn btn-success'>Update</button>
                     <button onClick={() => navegator(-1)} className='btn btn-secondary'>Back</button>
                 </div>
             </div>

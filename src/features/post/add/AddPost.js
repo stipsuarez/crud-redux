@@ -1,43 +1,55 @@
 import React, { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
-import { createPost, getPostById, updatePost } from "../../../app/actions/postsActions";
-import postService from "../../../app/services/postService";
+import { createPost, setCurrentPost, updatePost } from "../../../app/actions/postsActions";
 
 
 export function AddPost() {
     const initialPostState = {
-        id: 0,
+        id: -1,
         title: "",
-        profileId: 0
+        profileId: -1
     };
 
-    const [post, setPost] = useState(initialPostState);
+
 
     const dispatch = useDispatch();
 
-
+    ;
     const { id } = useParams()
-
-    const getPost = id => {
-        if (id && id > 0) {
-            postService.getPostById(id)
-                .then(response => {
-                    // console.log(response.data);
-                    setPost(response.data);
-
-                })
-                .catch(e => {
-                    console.log(e);
-                });
+    const [post, setPost] = useState(initialPostState);
+    const general = useSelector(state => state.general);
+    //console.log("Charge")
+    
+    const validateCurrent=()=>{
+        if (id && id>0 && general.currentPost, general.currentPost.id>0 ){
+            //console.log("Charge")
+            setPost(general.currentPost)
         }
     }
+   useEffect(()=>{
+    validateCurrent()
+   })
+    
+        
+    // const getPost = id => {
+    //     if (id && id > 0) {
+    //         postService.getPostById(id)
+    //             .then(response => {
+    //                 // console.log(response.data);
+    //                 setPost(response.data);
+
+    //             })
+    //             .catch(e => {
+    //                 console.log(e);
+    //             });
+    //     }
+    // }
 
 
-    useEffect(() => {
-        getPost(id);
-    }, [id]);
-
+    // useEffect(() => {
+    //     getPost(id);
+    // }, [id]);
 
 
 
@@ -50,11 +62,7 @@ export function AddPost() {
         setPost({ ...post, [name]: value });
     };
     const updatePostC = () => {
-        // const data = {
-        //     id: post.id,
-        //     title: post.title,
-        //     profileId: post.profileId
-        // };
+       
         dispatch(updatePost(id, post)).then(
             response => {
                 //setPost(...post)
@@ -92,10 +100,15 @@ export function AddPost() {
     const navegate = useNavigate()
 
     const PostPage = () => {
-        //goposts
-        //navegate("/posts")
-        //go back
-        navegate(-1)
+       console.log("intialpost",initialPostState)
+        dispatch(setCurrentPost(initialPostState)).then(
+            (response)=>{
+                navegate(-1)
+            }
+        ).catch(e=>{
+            console.log(e)
+        })
+        
     }
     const changeSubmitting = () => {
         //goposts
@@ -105,68 +118,69 @@ export function AddPost() {
     }
 
     return (
-        <div className="submit-form containerC">
-            {submitted  ? (
-                <div>
-                    <h4>You submitted successfully!</h4>
-                    <button className="btn btn-success" onClick={newPost}>
-                        Add
-                    </button>
-                    <button className="btn btn-secondary" onClick={PostPage}>
-                        Go Back
-                    </button>
-
-                    <button className="btn btn-primary" onClick={changeSubmitting}>
-                        Edit again
-                    </button>
-
-                </div>
-            ) : (
-                <div>
-                    <div className="form-group">
-                        <label htmlFor="title">{id && id > 0 ? "Editar Post: " + id : "Crear"}</label>
-                        <input
-                            type="text"
-                            className="form-control"
-                            id="title"
-                            required
-                            value={post.title}
-                            onChange={handleInputChange}
-                            name="title"
-                        />
-                    </div>
-
-                    <div className="form-group">
-                        <label htmlFor="profileId">Profile Id</label>
-                        <input
-                            type="number"
-                            className="form-control"
-                            id="profileId"
-                            required
-                            value={post.profileId}
-                            onChange={handleInputChange}
-                            name="profileId"
-                        />
-                    </div>
-                    <div className="align-items-stretch">
-                        {id && id > 0 ?
-                            <button onClick={updatePostC} className="btn btn-primary">
-                                Update
-                            </button>
-                            :
-                            <button onClick={savePost} className="btn btn-success">
-                                Create
-                            </button>
-                        }
-
-
+        <div className="container">
+            <div className="submit-form containerC">
+                {submitted ? (
+                    <div>
+                        <h4>You submitted successfully!</h4>
+                        <button className="btn btn-success" onClick={newPost}>
+                            Add
+                        </button>
                         <button className="btn btn-secondary" onClick={PostPage}>
                             Go Back
                         </button>
-                    </div>
-                </div>
-            )}
 
+                        <button className="btn btn-primary" onClick={changeSubmitting}>
+                            Edit again
+                        </button>
+
+                    </div>
+                ) : (
+                    <div>
+                        <div className="form-group">
+                            <label htmlFor="title">{id && id > 0 ? "Editar Post: " + id : "Crear"}</label>
+                            <input
+                                type="text"
+                                className="form-control"
+                                id="title"
+                                required
+                                value={post.title}
+                                onChange={handleInputChange}
+                                name="title"
+                            />
+                        </div>
+
+                        <div className="form-group">
+                            <label htmlFor="profileId">Profile Id</label>
+                            <input
+                                type="number"
+                                className="form-control"
+                                id="profileId"
+                                required
+                                value={post.profileId}
+                                onChange={handleInputChange}
+                                name="profileId"
+                            />
+                        </div>
+                        <div className="align-items-stretch">
+                            {id && id > 0 ?
+                                <button onClick={updatePostC} className="btn btn-primary">
+                                    Update
+                                </button>
+                                :
+                                <button onClick={savePost} className="btn btn-success">
+                                    Create
+                                </button>
+                            }
+
+
+                            <button className="btn btn-secondary" onClick={PostPage}>
+                                Go Back
+                            </button>
+                        </div>
+                    </div>
+                )}
+            </div>
         </div>
     );
 };

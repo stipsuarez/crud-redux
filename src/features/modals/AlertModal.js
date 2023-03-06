@@ -1,12 +1,8 @@
-import styles from './calculatorHome.css';
-import { faArrowRightArrowLeft } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Box, Typography, Modal } from "@mui/material";
-import { useEffect, useRef, useState } from "react";
+import Modal from "@mui/material/Modal";
+import {  useRef, useState } from "react";
 import Table from "react-bootstrap/Table";
-import { useParams } from 'react-router-dom';
 import { acceptAction, showModalAction } from '../../app/actions/postsActions';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 
 export function AlertModal({ showAlert }) {
@@ -16,17 +12,10 @@ export function AlertModal({ showAlert }) {
   // console.log(showAlert.showModal)
   let initialState = showAlert.showModal
   const [cieloRaso, setCieloRaso] = useState(initialState);
-  if (cieloRaso != showAlert.showModal)
+  const general = useSelector(state => state.general);
+  if (cieloRaso != showAlert.showModal&& general.action==="delete")
     setCieloRaso(showAlert.showModal)
-  // console.log("In modal 2")
-   //console.log(cieloRaso)
-  const [pvc, setPvc] = useState(false);
-  const [paredGypsum, setParedGypsum] = useState(false);
-  const [techoGypsum, setTechoGypsum] = useState(false);
-  const [calc, setCalc] = useState(null);
-  const [width, setWidth] = useState(null);
-  const [depth, setDepth] = useState(null);
-  const [sheet, setSheet] = useState(null);
+ 
   const [calcResult, setCalcResult] = useState(null);
   const [pcvErrorMessage, setPvcErrorMessage] = useState("");
   const refForm = useRef();
@@ -40,7 +29,7 @@ export function AlertModal({ showAlert }) {
   //   //refForm.current.reset();
   //   setCieloRaso(!cieloRaso)
   // };
-  const [general, setGeneral] = useState(showAlert.showAlert);
+  // const [general, setGeneral] = useState(showAlert.showAlert);
   const handleClose = () => {
     //setGeneral(false)
     //cieloRaso.showAlert=false;
@@ -53,7 +42,7 @@ export function AlertModal({ showAlert }) {
     // setSheet(null);
     // setPvcErrorMessage("");
 
-    dispatch(showModalAction(false)).then(
+    dispatch(showModalAction(false,-1,null)).then(
       response => {
         //cieloRaso.showAlert=false;
         setCieloRaso(false);
@@ -118,7 +107,7 @@ export function AlertModal({ showAlert }) {
                     <div className="col-12">
                       <div className="row col-12">
                         <div className="col-11 btn-danger">
-                          <h1 className="modal-title bg-danger text-light">Alerta!!!</h1>
+                          <h1 className="modal-title bg-warning text-light">Alerta!!!</h1>
                         </div>
                         <div className='col-1'>
                           <button type="button" className="btn btn-lg btn-outline-dark" data-dismiss="modal" onClick={() => handleClose()} aria-label="Close">
@@ -137,31 +126,7 @@ export function AlertModal({ showAlert }) {
                         {/* <img src={no} alt="close" onClick={handleClose} /> */}
                       </div>
                       <div className="calculator-data-home">
-                        {/* <input
-              type="text"
-              name="ancho"
-              id="ancho-home"
-              placeholder="Ancho (M)"
-              onChange={e => setWidth(e.target.value)}
-              onKeyDown={e => {
-                if (e.keyCode === 13) {
-                  handleCalculation();
-                }
-              }}
-            /> */}
-                        <FontAwesomeIcon icon={faArrowRightArrowLeft} />
-                        {/* <input
-              type="text"
-              name="fondo"
-              id="fondo-home"
-              placeholder="Fondo (M)"
-              onChange={e => setDepth(e.target.value)}
-              onKeyDown={e => {
-                if (e.keyCode === 13) {
-                  handleCalculation();
-                }
-              }}
-            /> */}
+                       
                       </div>
                       {calcResult && (
                         <div className="calc-result-table">
@@ -183,7 +148,7 @@ export function AlertModal({ showAlert }) {
                       )}
                       <div className="calculator-buttons-home">
                         <button
-                          className="brn btn-danger calculator-buttons-limpiar"
+                          className="btn btn-danger calculator-buttons-limpiar"
                           onClick={handleAccept}
                         >
                           Aceptar
