@@ -27,7 +27,6 @@ export function EditModal({ showAlert }) {
    
 
   const[id,setId] =useState(general.idPost ? general.idPost : -1)
-  console.log("After get general",id,general, postm)
   //let id = 
 
 
@@ -35,7 +34,6 @@ export function EditModal({ showAlert }) {
     validateCurrent()
   },[general])
   const validateCurrent = () => {
-    console.log("validateCurrent",id,general, postm)
     if (
       // id && id > 0 && 
       general.currentPost && general.currentPost.id > 0) {
@@ -105,7 +103,7 @@ export function EditModal({ showAlert }) {
         });
         setSubmitted(true);
         dispatch(setCurrentPost(data))
-         console.log("after save",data);
+        // console.log("after save",data);
       })
       .catch(e => {
         console.log(e);

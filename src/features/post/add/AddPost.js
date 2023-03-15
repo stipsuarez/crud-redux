@@ -100,7 +100,7 @@ export function AddPost() {
     const navegate = useNavigate()
 
     const PostPage = () => {
-       console.log("intialpost",initialPostState)
+    //    console.log("intialpost",initialPostState)
         dispatch(setCurrentPost(initialPostState)).then(
             (response)=>{
                 navegate(-1)
