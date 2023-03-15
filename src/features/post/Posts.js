@@ -2,7 +2,7 @@ import styles from './Posts.module.css';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
-import { deletePost, getAllPosts, getPostById, setCurrentPost, setId, showModal, showModalAction } from '../../app/actions/postsActions';
+import { deletePost, getAllPosts, setCurrentPost, setId, showModalAction } from '../../app/actions/postsActions';
 import { AlertModal } from '../modals/AlertModal';
 import { EditModal } from '../modals/EditModal';
 
@@ -13,7 +13,7 @@ export function Posts() {
     const dispatch = useDispatch();
     useEffect(() => {
         dispatch(getAllPosts());
-    }, []);
+    }, [posts]);
 
     const [showAlert, setShowAlert] = useState(false)
     const [showAlertM, setShowAlertM] = useState(false)

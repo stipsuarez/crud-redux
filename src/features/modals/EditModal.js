@@ -24,20 +24,27 @@ export function EditModal({ showAlert }) {
   if (visible != showAlert.showModal && (general.action === "editM" || general.action === "newM"))
     setVisible(showAlert.showModal)
 
+   
+
   const[id,setId] =useState(general.idPost ? general.idPost : -1)
+  console.log("After get general",id,general, postm)
   //let id = 
 
 
   useEffect(() => {
     validateCurrent()
-  })
+  },[general])
   const validateCurrent = () => {
-    //console.log("Hook Noooo fired",id,general, postm)
-    if (id && id > 0 && general.currentPost && general.currentPost.id > 0) {
-      if (postm && postm.id && postm.id < 0) {
+    console.log("validateCurrent",id,general, postm)
+    if (
+      // id && id > 0 && 
+      general.currentPost && general.currentPost.id > 0) {
+      setId(general.idPost)
+      // if (postm && postm.id && postm.id > 0) {
         setPostm(general.currentPost)
+      
       //  console.log("Hook fired", postm)
-      }
+      //}
 
 
     }
@@ -140,6 +147,7 @@ export function EditModal({ showAlert }) {
       response => {
         //visible.showAlert=false;
         setPostm(initialPostState)
+        setId(-1)
         setVisible(false)
       }
     ).catch(e => {
